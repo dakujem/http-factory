@@ -39,6 +39,8 @@ use Slim\Http\Request as SlimServerRequest;
 use Slim\Http\Uri as SlimUri;
 use Slim\Http\Headers as SlimHeaders;
 use Slim\Http\Environment as SlimEnvironment;
+use Slim\Psr7\Request as SlimPsr7ServerRequest;
+use Slim\Psr7\Factory\ServerRequestFactory as SlimPsr7ServerRequestFactory;
 use Zend\Diactoros\ServerRequest as DiactorosServerRequest;
 use Zend\Diactoros\ServerRequestFactory as DiactorosServerRequestFactory;
 
@@ -58,6 +60,10 @@ final class ServerRequestFactory implements ServerRequestFactoryInterface
 
         if (class_exists(NyholmServerRequest::class)) {
             return new NyholmServerRequest($method, $uri, [], null, "1.1", $serverParams);
+        }
+
+        if (class_exists(SlimPsr7ServerRequest::class)) {
+            return (new SlimPsr7ServerRequestFactory)->createServerRequest($method, $uri, $serverParams);
         }
 
         if (class_exists(SlimServerRequest::class)) {
