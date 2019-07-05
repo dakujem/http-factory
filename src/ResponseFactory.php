@@ -36,7 +36,7 @@ namespace Tuupola\Http\Factory;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use Nyholm\Psr7\Response as NyholmResponse;
 use Slim\Http\Response as SlimResponse;
-use Slim\Psr7\Response as SlimPsr7Response;
+use Slim\Psr7\Factory\ResponseFactory as SlimPsr7ResponseFactory;
 use Zend\Diactoros\Response as DiactorosResponse;
 
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -57,8 +57,8 @@ final class ResponseFactory implements ResponseFactoryInterface
             return new NyholmResponse($code, [], null, "1.1", $reason);
         }
 
-        if (class_exists(SlimPsr7Response::class)) {
-            return (new SlimPsr7Response)->withStatus($code, $reason);
+        if (class_exists(SlimPsr7ResponseFactory::class)) {
+            return (new SlimPsr7ResponseFactory)->createResponse($code, $reason);
         }
 
         if (class_exists(SlimResponse::class)) {

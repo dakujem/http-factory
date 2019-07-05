@@ -36,7 +36,6 @@ namespace Tuupola\Http\Factory;
 use GuzzleHttp\Psr7\UploadedFile as GuzzleUploadedFile;
 use Nyholm\Psr7\UploadedFile as NyholmUploadedFile;
 use Slim\Http\UploadedFile as SlimUploadedFile;
-use Slim\Psr7\UploadedFile as SlimPsr7UploadedFile;
 use Slim\Psr7\Factory\UploadedFileFactory as SlimPsr7UploadedFileFactory;
 use Zend\Diactoros\UploadedFile as DiactorosUploadedFile;
 
@@ -80,7 +79,7 @@ final class UploadedFileFactory implements UploadedFileFactoryInterface
             );
         }
 
-        if (class_exists(SlimPsr7UploadedFile::class)) {
+        if (class_exists(SlimPsr7UploadedFileFactory::class)) {
             return (new SlimPsr7UploadedFileFactory)->createUploadedFile(
                 $stream,
                 $size,

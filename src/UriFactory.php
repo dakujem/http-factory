@@ -36,7 +36,6 @@ namespace Tuupola\Http\Factory;
 use GuzzleHttp\Psr7\Uri as GuzzleUri;
 use Nyholm\Psr7\Uri as NyholmUri;
 use Slim\Http\Uri as SlimUri;
-use Slim\Psr7\Uri as SlimPsr7Uri;
 use Slim\Psr7\Factory\UriFactory as SlimPsr7UriFactory;
 use Zend\Diactoros\Uri as DiactorosUri;
 
@@ -58,7 +57,7 @@ final class UriFactory implements UriFactoryInterface
             return new NyholmUri($uri);
         }
 
-        if (class_exists(SlimPsr7Uri::class)) {
+        if (class_exists(SlimPsr7UriFactory::class)) {
             return (new SlimPsr7UriFactory)->createUri($uri);
         }
 

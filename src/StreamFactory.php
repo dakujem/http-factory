@@ -36,7 +36,6 @@ namespace Tuupola\Http\Factory;
 use GuzzleHttp\Psr7\Stream as GuzzleStream;
 use Nyholm\Psr7\Stream as NyholmStream;
 use Slim\Http\Stream as SlimStream;
-use Slim\Psr7\Stream as SlimPsr7Stream;
 use Slim\Psr7\Factory\StreamFactory as SlimPsr7StreamFactory;
 use Zend\Diactoros\Stream as DiactorosStream;
 
@@ -50,6 +49,10 @@ class StreamFactory implements StreamFactoryInterface
      */
     public function createStream(string $content = ""): StreamInterface
     {
+        if (class_exists(SlimPsr7StreamFactory::class)) {
+            return (new SlimPsr7StreamFactory)->createStream($content);
+        }
+
         $resource = fopen("php://temp", "r+");
         $stream = $this->createStreamFromResource($resource);
         $stream->write($content);
@@ -62,6 +65,10 @@ class StreamFactory implements StreamFactoryInterface
      */
     public function createStreamFromFile(string $filename, string $mode = "r"): StreamInterface
     {
+        if (class_exists(SlimPsr7StreamFactory::class)) {
+            return (new SlimPsr7StreamFactory)->createStreamFromFile($filename, $mode);
+        }
+
         $resource = fopen($filename, $mode);
         return $this->createStreamFromResource($resource);
     }
@@ -79,7 +86,7 @@ class StreamFactory implements StreamFactoryInterface
             return NyholmStream::create($resource);
         }
 
-        if (class_exists(SlimPsr7Stream::class)) {
+        if (class_exists(SlimPsr7StreamFactory::class)) {
             return (new SlimPsr7StreamFactory)->createStreamFromResource($resource);
         }
 
