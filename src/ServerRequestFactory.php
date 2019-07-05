@@ -38,11 +38,9 @@ use Nyholm\Psr7\ServerRequest as NyholmServerRequest;
 use Slim\Http\Request as SlimServerRequest;
 use Slim\Http\Uri as SlimUri;
 use Slim\Http\Headers as SlimHeaders;
-use Slim\Http\Environment as SlimEnvironment;
 use Slim\Psr7\Request as SlimPsr7ServerRequest;
 use Slim\Psr7\Factory\ServerRequestFactory as SlimPsr7ServerRequestFactory;
 use Zend\Diactoros\ServerRequest as DiactorosServerRequest;
-use Zend\Diactoros\ServerRequestFactory as DiactorosServerRequestFactory;
 
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
